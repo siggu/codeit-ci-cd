@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@vercel/speed-insights": "^1.1.0",
@@ -28,6 +29,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-jest": "^29.7.0",
+    "cypress": "^14.0.1",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "jest": "^29.7.0",
