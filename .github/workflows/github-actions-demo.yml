@@ -1,53 +1,42 @@
-name: GitHub Actions - Run Tests & Upload Coverage
-run-name: ${{ github.actor }} is testing Codecov 🚀
-
-on:
-  push:
-    branches:
-      - main # main 브랜치에 push될 때 실행
-  pull_request:
-    branches:
-      - main # PR이 생성될 때 실행
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push, pull_request]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
-  actions: write # to cancel/stop running workflows
-  contents: read # to fetch code
+  actions: write #  to cancel/stop running workflows (styfle/cancel-workflow-action)
+  contents: read #  to fetch code (actions/checkout)
 
 jobs:
-  test:
+  main:
     strategy:
       fail-fast: false
       matrix:
         node: [18, 20]
     runs-on: ubuntu-latest
-
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
 
-      - name: ⎔ Setup Node.js
+      - name: ⎔ Setup node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-          cache: 'npm'
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: npm ci
 
       - name: ▶️ Run build
         run: npm run build
 
-      - name: ▶️ Run tests with coverage
-        run: npm test -- --coverage # Jest에서 커버리지 수집
+      - name: ▶️ Run test
+        run: npm run test
 
-      - name: 📤 Upload coverage results to Codecov
+      - name: Upload results to Codecov
         uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # GitHub Secrets에서 가져옴
-          files: ./coverage/lcov.info # Jest의 커버리지 리포트 경로 지정
-          fail_ci_if_error: true # 업로드 실패 시 CI도 실패 처리
-          verbose: true # 디버깅 로그 활성화
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: siggu/codeit-ci-cd
