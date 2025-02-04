@@ -1,0 +1,17 @@
+coverage:
+  status:
+    project:
+      default:
+        target: 80% # 전체 코드 커버리지 최소 목표 (80% 이상 유지)
+        threshold: 2% # 2% 이하 변화는 허용 (너무 엄격한 실패 방지)
+    patch:
+      default:
+        target: 70% # PR에서 변경된 코드의 최소 커버리지
+        threshold: 1% # 1% 이하 변화는 허용
+
+comment:
+  layout: 'reach, diff, flags, files'
+  behavior: default
+  require_changes: true # 커버리지 변화가 있는 경우에만 댓글 작성
+  require_base: yes # base 브랜치의 커버리지 정보 필요
+  require_head: yes # PR 브랜치의 커버리지 정보 필요
